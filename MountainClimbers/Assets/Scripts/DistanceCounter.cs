@@ -14,6 +14,6 @@ public class DistanceCounter : MonoBehaviour
     {
         distance += Time.deltaTime;
         distanceInt = (int)distance;
-        txt.text = distanceInt.ToString();
+        txt.text = distanceInt.ToString() + "m";
     }
 }

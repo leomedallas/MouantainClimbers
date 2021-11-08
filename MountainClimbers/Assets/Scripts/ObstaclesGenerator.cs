@@ -4,43 +4,31 @@ using UnityEngine;
 
 public class ObstaclesGenerator : MonoBehaviour
 {
-    public GameObject leftObstacle;
-    public GameObject rightObstacle;
+    public GameObject[] spikes;
+    int instanceCount = 1;
 
     private void Start()
     {
-        StartCoroutine("LeftObstacleSpawn");
-        StartCoroutine("RightObstacleSpawn");
+        InvokeRepeating("CreateSpikes", 1.0f, 2.0f);
     }
 
-    private void SpawnLeftObstacle()
+    public void CreateSpikes()
     {
-        GameObject left = Instantiate(leftObstacle) as GameObject;
-        left.transform.position = new Vector2(-2.51f, 5.02f);
-
-    }
-
-    private void SpawnRightObstacle()
-    {
-        GameObject right = Instantiate(rightObstacle) as GameObject;
-        right.transform.position = new Vector2(3.15f, 5.02f);
-    }
-
-    IEnumerator LeftObstacleSpawn()
-    {
-        while(true)
+        for (int i = 0; i < instanceCount; i++)
         {
-            yield return new WaitForSeconds(Random.Range(2, 4));
-            SpawnLeftObstacle();
-        }  
-    }
+            int actualSpikes = Random.Range(0, spikes.Length);
 
-    IEnumerator RightObstacleSpawn()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(Random.Range(5, 8));
-            SpawnRightObstacle();
+            if(actualSpikes == 0)
+            {
+                GameObject left = Instantiate(spikes[0]) as GameObject;
+                left.transform.position = new Vector2(-2.51f, 5.02f);
+            }
+
+            if(actualSpikes == 1)
+            {
+                GameObject right = Instantiate(spikes[1]) as GameObject;
+                right.transform.position = new Vector2(3.15f, 5.02f);
+            }
         }
     }
 }
