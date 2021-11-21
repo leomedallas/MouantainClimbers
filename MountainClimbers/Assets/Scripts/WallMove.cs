@@ -6,7 +6,7 @@ public class WallMove : MonoBehaviour
 {
     Material material;
 
-    Vector2 offset=Vector2.zero;
+    Vector2 offset = Vector2.zero;
 
     public float yVelocity, xVelocity;
 

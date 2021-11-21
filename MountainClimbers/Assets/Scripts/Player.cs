@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
@@ -8,7 +9,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spr;
     private Animator anim;
-    int JumpForce = 8;
+    private Vector2 leftWall, rightWall;
+    int jumpForce = 2;
     float playerPos;
 
     private void Start()
@@ -16,6 +18,8 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        leftWall = new Vector2(-3.51f, -1.63f);
+        rightWall = new Vector2(4.146f, -1.63f);
     }
 
     private void Update()
@@ -25,31 +29,15 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && playerPos >= 4f)
         {
-            //transform.Translate(Vector3.left * JumpForce);
-            anim.SetBool("IsJump", true);
-            anim.SetBool("StandRight", false);
-            
-        }
-        else if(playerPos >= 4f)
-        {
-            //transform.position = new Vector2(4.15f, -1.63f);
-            //spr.flipX = false;
-            anim.SetBool("IsJumpRight", false);
-            anim.SetBool("StandRight", true);
+            transform.DOJump(leftWall, jumpForce, 1, 0.2f);
+            spr.flipX = true;
+
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && playerPos <= -3f)
         {
-            //transform.Translate(Vector3.right * JumpForce);
-            anim.SetBool("IsJumpRight", true);
-            anim.SetBool("StandLeft", false);
-        }
-        else if(playerPos <= -3f)
-        {
-            //transform.position = new Vector2(-3.5f, -1.63f);
-            //spr.flipX = true;
-            anim.SetBool("IsJump", false);
-            anim.SetBool("StandLeft", true);
+            transform.DOJump(rightWall, jumpForce, 1, 0.2f);
+            spr.flipX = false;
         }
     }
 
